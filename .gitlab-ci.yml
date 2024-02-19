@@ -1,0 +1,15 @@
+stages:
+- deploy
+
+deploy-worker:
+    image: node:lts
+    stage: deploy
+    environment: production
+    before_script:
+      # install dependencies
+      - npm ci
+    script:
+      - npm run deploy
+    rules:
+      # This rule triggers this job after any push to the default branch
+      - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
